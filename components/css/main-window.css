@@ -1,0 +1,7 @@
+#main-window{
+    width:calc(100% - 240px);
+    height:100%;
+    margin-left:240px;
+    float:left;
+    
+}

@@ -1,0 +1,44 @@
+#undo-button-modal {
+    position:fixed;
+    top: 25px;
+    right:25px;
+    width:350px;
+    height:100px;
+    background-color:rgb(255, 255, 255);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13), 0 3px 10px 0 rgba(0, 0, 0, 0.11);
+    border-radius:14px;
+    animation-name: fade-in;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    display:none;
+}
+
+#undo-button{
+    background-color:rgb(243, 243, 243);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13), 0 3px 10px 0 rgba(0, 0, 0, 0.11);
+    width:150px;
+    height:80px;
+    border-radius:14px;
+    margin-top:10px;
+    float:right;
+    margin-right:10px;
+}
+#undo-button-text{
+    width:155px;
+    height:80px;
+    float:left;
+    padding:10px;
+    font-size:20px;
+    text-align:center;
+}
+#undo-button-area{
+    width:175px;
+    height:100px;
+    float:left;
+}
+
+/* animations */
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
