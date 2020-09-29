@@ -1,9 +1,3 @@
-/* 
-This will load all of the tasks from the database into objects. It will talk to the database
-through a file called load_tasks_to_objects.php.
-*/
-
-
 $(document).ready(function () {
 
     // Initialize variables
@@ -11,22 +5,6 @@ $(document).ready(function () {
     home_server_site.remove_undo_button = null;
     home_server_site.display_all_tasks_time = null;
     home_server_site.first_new_task_click = false;
-    home_server_site.sort_task = "none";
-
-    // Get all of the tasks from the database that are not complete
-    $.post('./components/backend/load_tasks_to_objects.php', function (result) {
-        // Turn the result into JSON objects
-        home_server_site.task = JSON.parse(result)
-        home_server_site.original_task_order = [...home_server_site.task];
-
-        if (home_server_site.sort_task == "highest_first") {
-            home_server_site.task.sort((a, b) => (a.priority < b.priority) ? 1 : -1)
-        }
-    });
-
-
-
-
 
     // When the user clicks to type in the new task area, show the submit button
     // and the priority selector.
@@ -39,44 +17,40 @@ $(document).ready(function () {
         }
     });
 
-    // $(document).on("blur", "#new-task-input", function () {
-    //     if ($("#new-task-input").val() == "") {
-    //         $("#new-task-button").css("display", "none");
-    //         $("#change-priority-button").css("display", "none");
-    //     }
-    // });
+    $(document).on("keypress", "#new-task-input", function (event) {
+        if (event.keyCode == 13) {
+            $('#new-task-button').click();
+        }
+    });
 
-    // When the submit button is clicked on the new task. Submit the task to the database
-    // with insert_new_task.php. 
-
-    // --- FIXME --- Validate the information that is submitted.
     $(document).on("click", "#new-task-button", function () {
 
         var description = $("#new-task-input").val();
         var priority = $("#change-priority-button").val();
 
+        // Make sure the user entered a value.
         if (description.length == 0) {
             return;
         }
 
-        home_server_site.tasks_not_completed += 1;
+        //home_server_site.tasks_not_completed += 1;
 
+        var id = window.localStorage.home_server_site_total_tasks_created;
+        window.localStorage.home_server_site_total_tasks_created += 1;
 
+        home_server_site_db_tasks.push({ id: id, description: description, priority: priority, list: window.localStorage.home_server_site_selected_list });
+        // home_server_site_task_lists[0].tasks_created += 1;
+        // alert(home_server_site_task_lists[0].tasks_created);
 
-
-
-        // Insert the new task into the database.
-        $.post('./components/backend/insert_new_task.php', { description: description, priority: priority }, function (id) {
-            home_server_site.task.push({ id: id, description: description, priority: priority });
-            display_all_tasks()
-        });
+        display_all_tasks()
 
         $("#new-task-input").val("");
 
         $("#change-priority-dropdown").css("display", "none");
         home_server_site.change_priority_dropdown = false;
 
-
+        store_data_lists();
+        store_data();
 
     });
 
@@ -114,31 +88,30 @@ $(document).ready(function () {
 
     });
 
-    // --- FIXME --- Get the display_all_tasks to be delayed if multiple checks are clicked.
     // Check button
     $(document).on("click", ".check-button", function () {
         var id = $(this).val()
         var completion_status = 1;
-        home_server_site.tasks_completed += 1;
-        home_server_site.tasks_not_completed -= 1;
 
-        $.post('./components/backend/update_task_completion_status.php', { id: id, completion_status: completion_status })
+        window.localStorage.home_server_site_total_tasks_completed = parseInt(localStorage.home_server_site_total_tasks_completed) + 1;
+
+        //$.post('./components/backend/update_task_completion_status.php', { id: id, completion_status: completion_status })
 
         $("#undo-button").val(id);
 
-        for (var i = 0; i < home_server_site.task.length; i++) {
-            if (home_server_site.task[i].id == id) {
-                $("#undo-button").data('description', home_server_site.task[i].description);
-                $("#undo-button").data('priority', home_server_site.task[i].priority);
-                if (home_server_site.task[i].priority == 2) {
-                    home_server_site.high_priority_completed += 1;
-                } else if (home_server_site.task[i].priority == 1) {
-                    home_server_site.medium_priority_completed += 1;
-                } else if (home_server_site.task[i].priority == 0) {
-                    home_server_site.low_priority_completed += 1;
+        for (var i = 0; i < home_server_site_db_tasks.length; i++) {
+            if (home_server_site_db_tasks[i].id == id) {
+                $("#undo-button").data('description', home_server_site_db_tasks[i].description);
+                $("#undo-button").data('priority', home_server_site_db_tasks[i].priority);
+                if (home_server_site_db_tasks[i].priority == 2) {
+                    window.localStorage.home_server_site_high_priority_completed = parseInt(window.localStorage.home_server_site_high_priority_completed) + 1;
+                } else if (home_server_site_db_tasks[i].priority == 1) {
+                    window.localStorage.home_server_site_medium_priority_completed = parseInt(window.localStorage.home_server_site_medium_priority_completed) + 1;
+                } else if (home_server_site_db_tasks[i].priority == 0) {
+                    window.localStorage.home_server_site_low_priority_completed = parseInt(window.localStorage.home_server_site_low_priority_completed) + 1;
                 }
 
-                home_server_site.task.splice(i, 1);
+                home_server_site_db_tasks.splice(i, 1);
             }
         }
 
@@ -153,29 +126,34 @@ $(document).ready(function () {
 
         home_server_site.display_all_tasks_time = setTimeout(function () { display_all_tasks(); }, 1000);
         home_server_site.remove_undo_button = setTimeout(function () { $("#undo-button-modal").css("display", "none"); }, 10000);
+
+        store_data();
+
     });
 
+    // This will handle what happens when you click the undo button.
     $(document).on("click", "#undo-button", function () {
         var id = $(this).val()
         var completion_status = 0;
-        home_server_site.tasks_completed -= 1;
-        home_server_site.tasks_not_completed += 1;
+        window.localStorage.home_server_site_total_tasks_completed = parseInt(localStorage.home_server_site_total_tasks_completed) - 1;
 
-        $.post('./components/backend/update_task_completion_status.php', { id: id, completion_status: completion_status })
         $("#undo-button-modal").css("display", "none");
         var description = $("#undo-button").data('description');
         var priority = $("#undo-button").data('priority');
 
         if (priority == 2) {
-            home_server_site.high_priority_completed -= 1;
+            window.localStorage.home_server_site_high_priority_completed = parseInt(window.localStorage.home_server_site_high_priority_completed) - 1;
         } else if (priority == 1) {
-            home_server_site.medium_priority_completed -= 1;
+            window.localStorage.home_server_site_medium_priority_completed = parseInt(window.localStorage.home_server_site_medium_priority_completed) - 1;
         } else if (priority == 0) {
-            home_server_site.low_priority_completed -= 1;
+            window.localStorage.home_server_site_low_priority_completed = parseInt(window.localStorage.home_server_site_low_priority_completed) - 1;
         }
-        home_server_site.task.push({ id: id, description: description, priority: priority });
+
+        home_server_site_db_tasks.push({ id: id, description: description, priority: priority, list: window.localStorage.home_server_site_selected_list });
+
         display_all_tasks()
 
+        store_data();
 
     });
 
@@ -187,44 +165,63 @@ $(document).ready(function () {
 
 
 
-// This function will take all of the tasks and display them by adding them to the tasks-load div.
-// It will create the html needed to see the tasks and put in the values such as priority, and description.
+// This function will take all of the tasks and display them by adding them to the tasks-list-load div.
+// It will get the html needed from the create_task_html function.
 
 function display_all_tasks() {
 
     // Clear any tasks that were there before.
-    $("#tasks-load").html("");
+    $("#tasks-list-load").html("");
+
+    if (window.localStorage.home_server_site_settings_sort == "true") {
+        var tasks_to_render = [...home_server_site_db_tasks];
+        tasks_to_render.sort((a, b) => (a.priority < b.priority) ? 1 : -1);
+    } else {
+        var tasks_to_render = home_server_site_db_tasks;
+    }
 
     // Go through all task objects and add them.
-    for (var i = 0; i < home_server_site.task.length; i++) {
-
-        var priority = "low-priority";
-
-        if (home_server_site.task[i].priority == 1) {
-            priority = "medium-priority";
-        } else if (home_server_site.task[i].priority == 2) {
-            priority = "high-priority";
-        }
-
-        $("#tasks-load").append("\
-            <div class='task'>\
-                <div class='priority " + priority + "' >\
-                </div>\
-                <div class='task-text'>\
-                    <h2 class='font-1'>" + home_server_site.task[i].description + "</h2>\
-                </div>\
-                <div class='check-button-area'>\
-                    <button class='check-button' value='" + home_server_site.task[i].id + "' >\
-                        <img style='height:46px;padding-top:2px;' src='./images/check.png' >\
-                    </button>\
-                </div>\
-                <div id='task-flag-" + home_server_site.task[i].id + "' class='task-complete-flag'>\
-                    <div style='height:56px;width:67px;padding-top:10px;margin:0 auto;'>\
-                        <img style='height:56px;width:67px;' src='./images/check.png' >\
-                    </div>\
-                </div>\
-            </div>\
-        ");
-    };
+    tasks_to_render.filter(is_in_selected_list).forEach((x) => create_task_html(x));
 
 };
+
+function is_in_selected_list(task) {
+    return task.list == window.localStorage.home_server_site_selected_list;
+}
+
+function create_task_html(task_item) {
+
+    const { id, priority, description } = task_item;
+
+    var priority_class = "low-priority";
+
+    if (priority == 1) {
+        priority_class = "medium-priority";
+    } else if (priority == 2) {
+        priority_class = "high-priority";
+    }
+
+    let html =
+        `
+        <div class='task'>
+            <div class='priority ${priority_class}' >
+            </div>
+            <div class='task-text'>
+                <h2 class='font-1'>${description}</h2>
+            </div>
+            <div class='check-button-area'>
+                <button class='check-button' value='${id}' >
+                    <img class='task-check-image' src='./images/check.png' >
+                </button>
+            </div>
+            <div id='task-flag-${id}' class='task-complete-flag'>
+                <div style='height:56px;width:67px;padding-top:10px;margin:0 auto;'>
+                    <img style='height:56px;width:67px;' src='./images/check.png' >
+                </div>
+            </div>
+        </div>
+        `;
+
+    $("#tasks-list-load").append(html);
+
+}

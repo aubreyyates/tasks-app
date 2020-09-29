@@ -2,9 +2,44 @@
     width:100%;
     height:100px;
     border-bottom: 1px solid #E2E2E2;
+    background-color: #444f53;
+    color:white;
 }
 #main-window-heading h1{
     text-align:center;
     font-size:50px;
     line-height:100px;
+}
+#main-window-heading-text-container {
+    width:50%;
+    margin-left:25%;
+    float:left;
+}
+#main-heading-hamburger-container{
+    float:left;
+    width:25%;
+}
+#main-heading-hamburger-button{
+    float:right;
+    background-color: transparent;
+    height:80px;
+    margin-top:10px;
+    margin-right:14px;
+    display:block;
+}
+#main-heading-hamburger-image{
+    height: 30px;
+    margin-top: 10px;
+}
+@media only screen and (min-width: 768px) {
+    #main-window-heading{
+        width:100%;
+        height:100px;
+        background-color: transparent;
+        color:black;
+        border-bottom: 1px solid #E2E2E2;
+    }
+    #main-heading-hamburger-button{
+        display:none;
+    }
 }

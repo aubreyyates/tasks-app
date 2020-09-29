@@ -1,27 +1,36 @@
 #undo-button-modal {
     position:fixed;
-    top: 25px;
-    right:25px;
-    width:350px;
-    height:100px;
+    top:10px;
+    margin-left:20px;
+    width:225px;
+    height:80px;
     background-color:rgb(255, 255, 255);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13), 0 3px 10px 0 rgba(0, 0, 0, 0.11);
     border-radius:14px;
     animation-name: fade-in;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
-    display:none;
+    display:block;
 }
 
 #undo-button{
     background-color:rgb(243, 243, 243);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13), 0 3px 10px 0 rgba(0, 0, 0, 0.11);
-    width:150px;
-    height:80px;
+    width:125px;
+    height:70px;
     border-radius:14px;
-    margin-top:10px;
+    margin-top:4px;
     float:right;
     margin-right:10px;
+}
+#undo-button-text-hamburger {
+    float:left;
+    height:70px;
+    width:100px;
+    text-align: center;
+}
+#undo-button-text-hamburger p {
+    margin-top:30px;
 }
 #undo-button-text{
     width:155px;
@@ -30,10 +39,11 @@
     padding:10px;
     font-size:20px;
     text-align:center;
+    display:none;
 }
 #undo-button-area{
-    width:175px;
-    height:100px;
+    width:125px;
+    height:70px;
     float:left;
 }
 
@@ -41,4 +51,31 @@
 @keyframes fade-in {
     from {opacity: 0;}
     to {opacity: 1;}
+}
+
+@media only screen and (min-width: 768px) {
+    #undo-button-modal {
+        position:fixed;
+        top:25px;
+        right:25px;
+        width:350px;
+        height:100px;
+        margin-left:0px;
+    }   
+    #undo-button-text{
+        display:block;
+    }
+    #undo-button-text-hamburger {
+        display:none;
+    }
+    #undo-button-area{
+        width:175px;
+        height:100px;
+    }
+    #undo-button{
+        margin-top:10px;
+        width:150px;
+        height:80px;
+
+    }
 }

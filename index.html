@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Tasks App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+
+</head>
+
+<body>
+
+    <div id='main-section'>
+        <div id='nav-panel-load'></div>
+        <div id='main-window-load'></div>
+    </div>
+
+    <div id='browser-check-modal-overlay'>
+        <div id='browser-check-modal' class='font-1 browser-check-font'>
+            Unfortunately, this app will not work with the browser you are using (Internet Explorer). Here is a link to
+            download the <a href='https://www.google.com/chrome/browser/'>Chrome
+
+
+                Browser</a> if you want to try this app. <br> <br>You can also go back to <a
+                href='https://www.futurewebservice.com'>Future Web
+                Service</a>
+            here.
+        </div>
+    </div>
+
+    <!-- The module.js is for Electron JS apps and will be commented out in the web app. -->
+    <!-- <script src='.js/module.js'></script> -->
+
+    <!-- JQuery Library -->
+    <script src='./js/jquery-3.4.1.min.js'></script>
+    <!-- Main script file -->
+    <script src='./js/script.js'></script>
+
+    <!-- Scripts from different components -->
+    <script src='./components/js/home.js'></script>
+    <script src='./components/js/tasks.js'></script>
+    <script src='./components/js/task-lists.js'></script>
+    <script src='./components/js/settings.js'></script>
+
+
+</body>
+
+</html>

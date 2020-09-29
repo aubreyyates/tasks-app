@@ -4,14 +4,7 @@
     <div style='height:50px;'></div>
     <div id='tasks-data-area'>
         <div id='tasks-data' class='font-1'>
-            <div class='tasks-data-line'>
-                <div class='tasks-data-completed'>
-                    <p>Total Tasks Not Completed:</p>
-                </div>
-                <div class='tasks-data-completed-num'>
-                    <p id='task-not-complete-count'></p>
-                </div>
-            </div>
+            <div class='tasks-heading'>Completion Stats</div>
             <div class='tasks-data-line'>
                 <div class='tasks-data-completed'>
                     <p>Total Tasks Completed:</p>
@@ -20,7 +13,20 @@
                     <p id='task-complete-count'></p>
                 </div>
             </div>
-            <div style='height:60px;'></div>
+            <div class='tasks-data-line'>
+                <div class='tasks-data-completed'>
+                    <p>Total Tasks Not Completed:</p>
+                </div>
+                <div class='tasks-data-completed-num'>
+                    <p id='task-not-complete-count'></p>
+                </div>
+            </div>
+
+            <div style='height:14px;'></div>
+            <div class='divider-line-h'></div>
+            <div style='height:20px;'></div>
+
+            <div class='tasks-heading'>Priority Breakdown</div>
             <div class='tasks-data-line'>
                 <div class='tasks-data-completed'>
                     <p>High Priority Completed:</p>
@@ -46,29 +52,39 @@
                 </div>
             </div>
         </div>
+
         <div id='tasks-charts' class='font-1'>
+
+            <div class='tasks-heading-2'>Task Complete Percentages</div>
             <div class='tasks-chart'>
                 <div id='chart-1-tasks-completed' class='bar-chart'>
-                    <p>Completed</p>
+                    <p id='chart-1-tasks-completed-text'></p>
                 </div>
                 <div id='chart-1-tasks-not-completed' class='bar-chart'>
-                    <p>Not Completed</p>
+                    <p id='chart-1-tasks-not-completed-text'></p>
+                </div>
+                <div id='chart-1-no-data' class='bar-chart-no-data'>
+                    <p>No Data</p>
                 </div>
             </div>
+            <div style='height:16px;'></div>
+            <div class='divider-line-h'></div>
             <div style='height:20px;'></div>
+            <div class='tasks-heading-2'>Priority Percentages</div>
             <div class='tasks-chart'>
                 <div id='chart-2-tasks-high' class='bar-chart'>
-                    <p>High Priority</p>
+                    <p id='chart-2-high-text'>High Priority</p>
                 </div>
                 <div id='chart-2-tasks-medium' class='bar-chart'>
-                    <p>Medium Priority</p>
+                    <p id='chart-2-medium-text'>Medium Priority</p>
                 </div>
                 <div id='chart-2-tasks-low' class='bar-chart'>
-                    <p>Low Priority</p>
+                    <p id='chart-2-low-text'>Low Priority</p>
+                </div>
+                <div id='chart-2-no-data' class='bar-chart-no-data'>
+                    <p>No Data</p>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

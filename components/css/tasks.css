@@ -5,7 +5,7 @@
 #new-task {
     position: relative;
     margin: 0 auto;
-    width:90%;
+    width:96%;
     height:65px;
     border: 1px solid rgba(226, 226, 226, 0.5);
     margin-bottom: 15px;
@@ -17,7 +17,7 @@
     width:100%;
 } */
 #new-task-input-area{
-    width:60%;
+    width:56%;
     float:left;
 }
 #new-task-input {
@@ -37,7 +37,7 @@
     border-radius: 14px 0px 0px 14px;
 }
 #new-task-button-area{
-    width:20%;
+    width:24%;
     float:left;
 }
 #new-task-button {
@@ -50,7 +50,7 @@
     margin-right:10px;
     margin-top:7px;
     border-radius:14px;
-    font-size:30px;
+    font-size:18px;
     color:white;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
     display:none;
@@ -78,7 +78,7 @@
 }
 .task{
     margin: 0 auto;
-    width:90%;
+    width:96%;
     height:65px;
     border: 1px solid #E2E2E2;
     margin-bottom: 15px;
@@ -122,16 +122,20 @@
 }
 
 .task-text {
-    width:60%;
+    width:56%;
     float:left;
     line-height: 65px;
 }
 .task-text h2 {
     padding-left:20px;
-    font-size:24px;
+    font-size:22px;
+    white-space: nowrap; 
+    overflow: hidden;
+    padding-right:30px;
+    text-overflow: ellipsis;
 }
 .check-button-area{
-    width:20%;
+    width:24%;
     float:left;
 }
 .check-button{
@@ -157,9 +161,50 @@
     animation-fill-mode: forwards;
     display:none;
 }
+.task-check-image{
+    height:36px;
+    padding-top:4px;
+}
 
 /* animations */
 @keyframes fade-in {
     from {opacity: 0;}
     to {opacity: 1;}
+}
+
+@media only screen and (min-width: 600px) {
+    #new-task-button {
+        font-size:24px;
+    }
+    .task {
+        width:90%;
+    }
+    #new-task{
+        width:90%;
+    }
+    .task-check-image{
+        height:46px;
+        padding-top:2px;
+    }
+    .task-text h2 {
+        font-size:24px;
+    }
+    #new-task-input-area{
+        width:60%;
+    }
+    #new-task-button-area{
+        width:20%;
+    }
+    .task-text {
+        width:60%;
+    }
+    .check-button-area{
+        width:20%;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    #new-task-button {
+        font-size:30px;
+    }
 }

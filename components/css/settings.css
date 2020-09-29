@@ -1,41 +1,73 @@
 #settings {
-    width:90%;
+    width:96%;
     margin: 0 auto;
 }
 
 #settings-area{
     padding:40px;
+    padding-left:30px;
+    padding-right:30px;
     position: relative;
     margin: 0 auto;
-    width:calc(100% - 80px);
-    height:160px;
+    width:calc(100% - 60px);
+    /* height:400px; */
+    height:240px;
     border: 1px solid rgba(226, 226, 226, 0.5);
     margin-bottom: 15px;
     border-radius: 0px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13), 0 3px 10px 0 rgba(0, 0, 0, 0.11);
 }
 .settings-line {
-    width: 750px;
     margin: 0 auto;
+    height:80px;
 }
 
 .settings-line-words p {
-    font-size: 36px;
+    font-size: 28px;
+    margin-top: 3px;
 }
 .settings-line-words {
     float:left;
-    width:650px;
+    width:65%;
     height:80px;
 }
 .settings-line-switch {
     float:left;
     height:80px;
-    width:100px;
+    width:35%;
 }
 
 .switch-container {
     margin-top:4px;
     float:right;
+}
+
+.settings-line-feedback {
+    width:50%;
+    height:80px;
+    float:left;
+    font-size:18px;
+    color: red;
+    line-height:80px;
+}
+.settings-line-button {
+    width:50%;
+    float:left;
+    height:80px;
+}
+
+.settings-button {
+    width: 132px;
+    font-size:18px;
+    height:40px;
+    margin-top: 22px;
+    background-color:rgb(223, 223, 223);
+    color:rgb(83, 83, 83);
+    border-radius:8px;
+    float:right;
+}
+.settings-button:hover {
+    background-color:rgb(207, 207, 207);
 }
 
 /* Switch CSS */
@@ -91,4 +123,30 @@ input:checked + .slider:before {
     -webkit-transform: translateX(32px);
     -ms-transform: translateX(32px);
     transform: translateX(32px);
+}
+@media only screen and (min-width: 600px) {
+    .settings-button {
+        width: 200px;
+    }
+    #settings {
+        width:90%;
+    }
+    .settings-line-words p {
+        font-size: 36px;
+        margin-top: 0px;
+    }
+    .settings-line-words {
+        width:80%;
+    }
+    .settings-line-switch {
+        width:20%;
+    }
+}
+@media only screen and (min-width: 1000px) {
+    #settings-area{
+        padding:40px;
+        padding-left:100px;
+        padding-right:100px;
+        width:calc(100% - 200px);
+    }
 }

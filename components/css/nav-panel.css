@@ -1,8 +1,8 @@
 #nav-panel{
+    display:none;
     width:240px;
     position: fixed;
     height:100%;
-    
 }
 #logo-area{
     height:100px;
@@ -25,6 +25,54 @@
     padding-left:20px;
     /* border-bottom: 1px solid rgba(182, 182, 182, 0.322); */
 }
+#nav-panel-hamburger-modal {
+    display:none;
+    position:fixed;
+    z-index:1;
+    background-color:#444f53;
+    height:100%;
+    top:0px;
+    width:100%;
+}
+.nav-panel-hamburger-modal-button {
+    width:100%;
+    height:80px;
+    background-color:transparent;
+    font-size:40px;
+    color:white;
+}
 .nav-button-selected{
     background-color:#272f31;
+}
+
+#nav-task-lists{
+    display:none;
+}
+
+#settings-priority-desktop{
+    display:none;
+}
+#settings-priority-mobile{
+    display:block;
+}
+
+
+
+
+
+
+
+@media only screen and (min-width: 768px) {
+    #nav-panel{ 
+        display:block;
+    }
+    #settings-priority-desktop{
+        display:block;
+    }
+    #settings-priority-mobile{
+        display:none;
+    }
+    #nav-panel-hamburger-modal-container {
+        display:none;
+    }
 }
